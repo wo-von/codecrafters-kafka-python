@@ -9,9 +9,12 @@ def main():
     # Uncomment this to pass the first stage
     #
     server = socket.create_server(("localhost", 9092), reuse_port=True)
-    conn, addr = server.accept() # wait for client
-    data = conn.recv(1024)
-    print(f'data received from {addr} is {data}')
+    ClientSock, ClientAddr = server.accept() # wait for client
+    data = ClientSock.recv(1024)
+    print(f'data received from {ClientAddr} is {data}')
+    response = b"\x00\x00\x00\x00\x00\x00\x00\x07"
+    ClientSock.sendall(response)
+    
 
 if __name__ == "__main__":
     main()
